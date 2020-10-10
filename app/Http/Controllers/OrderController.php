@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use phpDocumentor\Reflection\Types\Null_;
-
+use PDF;
 class OrderController extends Controller
 {
     public function index()
@@ -73,5 +73,21 @@ class OrderController extends Controller
                       ->get();
 
         return view('back_end.view_order_details', compact('items', 'shipping_info'));
+    }
+
+    public function print_order()
+    {
+        $items = DB::table('billings')
+                    ->join('items', 'billings.item_id', '=', 'items.id')
+                    ->select('billings.*', 'items.image', 'items.name')
+                    ->get();
+
+        $shipping_info = DB::table('sales')
+                      ->join('shippings', 'sales.shipping_id', '=', 'shippings.id')
+                      ->select('sales.*', 'shippings.*')
+                      ->get();
+
+        $pdf = PDF::loadView('back_end.print_order_pdf', compact('items', 'shipping_info'));
+        return $pdf->stream('invoice.pdf');
     }
 }

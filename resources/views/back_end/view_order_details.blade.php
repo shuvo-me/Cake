@@ -4,7 +4,7 @@
 
      <div class="row mt-5">
          <div class="col-lg-12 text-right">
-            <a href="" class="btn btn-success btn-sm f-right">Print Order</a>
+         <a href="{{url('/print_order')}}" class="btn btn-success btn-sm f-right">Print Order</a>
          </div>
      </div>
     <div class="row mt-5 text-center">

@@ -19,8 +19,11 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
-Route::get('/dashoard', 'HomeController@dashoard');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/home', 'HomeController@index');
+    Route::get('/dashoard', 'HomeController@dashoard');
+});
+
 
 //frontend
 Route::get('/', 'FrontendController@home');
@@ -77,3 +80,4 @@ Route::get('/decline_order/{id}', 'OrderController@decline_order');
 Route::get('/complete_orders', 'OrderController@complete_orders');
 Route::get('/decline_orders', 'OrderController@decline_orders');
 Route::get('/view_order_details', 'OrderController@view_order_details');
+Route::get('/print_order', 'OrderController@print_order');
