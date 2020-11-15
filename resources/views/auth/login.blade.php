@@ -65,6 +65,7 @@
                             </div>
                         </div>
                     </form>
+                <a href="{{url('auth/github')}}" class="btn btn-success btn-sm">Via GitHub</a>
                 </div>
             </div>
         </div>

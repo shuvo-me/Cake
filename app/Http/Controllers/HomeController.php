@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Slider;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Item;
+use App\Sale;
 class HomeController extends Controller
 {
     /**
@@ -26,10 +28,16 @@ class HomeController extends Controller
         return view('back_end.master');
     }
 
-    public function dashoard()
+    public function dashboard()
     {
+
         $categories =  Category::all();
-        return view('back_end.dashboard', compact('categories'));
+        $total_items = Item::count();
+        $pending_orders =  Sale::where('status', 0)->count();
+        $complete_orders =  Sale::where('status', 1)->count();
+        $decline_orders =  Sale::where('status', null)->count();
+        return view('back_end.dashboard', compact('categories', 'total_items','pending_orders', 'complete_orders', 'decline_orders'))->with('status', 'You have to complete your profile !!');
+
     }
 
 
@@ -45,4 +53,12 @@ class HomeController extends Controller
         $categories =  Category::all();
         return view('back_end.contact', compact('categories', 'sliders'));
     }
+
+    // public function dasboard()
+    // {
+    //     $total_items = Item::all();
+
+
+    //     return view('back_end.dashboard', compact('total_items'));
+    // }
 }

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Item;
 use App\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +18,8 @@ class OrderController extends Controller
                    ->select('sales.amount', 'sales.id', 'sales.discount', 'sales.payment_type', 'shippings.created_at as order_placed')
                    ->where('status', 0)
                    ->get();
-          return view('back_end.pending_order', compact('orders'));
+        $total_items = Item::all();
+          return view('back_end.pending_order', compact('orders', 'total_items'));
     }
 
     public function confirm_order($id)
@@ -46,7 +49,9 @@ class OrderController extends Controller
                    ->select('sales.amount', 'sales.id', 'sales.discount', 'sales.payment_type', 'shippings.created_at as order_placed')
                    ->where('status', 1)
                    ->get();
-        return view('back_end.complete_order', compact('orders'));
+
+        $total_items = Item::all();
+        return view('back_end.complete_order', compact('orders', 'total_items'));
     }
 
     public function decline_orders()
@@ -57,7 +62,9 @@ class OrderController extends Controller
                    ->where('status', 1)
                    ->get();
 
-        return view('back_end.decline_order', compact('orders'));
+
+        $total_items = Item::all();
+        return view('back_end.decline_order', compact('orders', 'total_items'));
     }
 
     public function view_order_details()
@@ -71,8 +78,8 @@ class OrderController extends Controller
                       ->join('shippings', 'sales.shipping_id', '=', 'shippings.id')
                       ->select('sales.*', 'shippings.*')
                       ->get();
-
-        return view('back_end.view_order_details', compact('items', 'shipping_info'));
+        $total_items = Item::all();
+        return view('back_end.view_order_details', compact('items', 'shipping_info', 'total_items'));
     }
 
     public function print_order()

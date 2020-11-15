@@ -5,6 +5,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Slider;
 use App\Category;
 use Carbon\Carbon;
+use App\Item;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -12,7 +13,8 @@ class CategoryController extends Controller
     public function category(){
         $sliders = Slider::all();
         $categories =  Category::all();
-        return view('back_end.category', compact('categories', 'sliders'));
+        $total_items = Item::all();
+        return view('back_end.category', compact('categories', 'sliders','items', 'total_items'));
     }
 
 
@@ -24,7 +26,8 @@ class CategoryController extends Controller
         ]);
         $sliders = Slider::all();
         $categories =  Category::all();
-       return view('back_end.category', compact('categories', 'sliders'));
+        $total_items = Item::all();
+       return view('back_end.category', compact('categories', 'sliders', 'items', 'total_items'));
     }
 
     public function edit_category($id)
@@ -32,7 +35,8 @@ class CategoryController extends Controller
         $sliders = Slider::all();
         $categories =  Category::all();
         $item = Category::where('id', $id)->first();
-        return view('back_end.edit_category', compact('item', 'categories', 'sliders'));
+        $total_items = Item::all();
+        return view('back_end.edit_category', compact('item', 'categories', 'sliders', 'items', 'total_items'));
     }
 
     public function update_category(Request $request)

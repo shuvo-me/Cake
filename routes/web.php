@@ -20,11 +20,15 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/home', 'HomeController@index');
-    Route::get('/dashoard', 'HomeController@dashoard');
+    Route::get('/home', 'HomeController@dashboard');
+    Route::get('/dashoard', 'HomeController@dashboard');
+    Route::get('/view_profile', 'UserController@view_profile');
+    Route::post('/update_profile', 'UserController@update_profile');
+    //gettig users
+    Route::get('/all_admins', 'UserController@all_admins');
 });
 
-
+Route::get('/dasboard', 'HomeController@dashboard');
 //frontend
 Route::get('/', 'FrontendController@home');
 
@@ -81,3 +85,12 @@ Route::get('/complete_orders', 'OrderController@complete_orders');
 Route::get('/decline_orders', 'OrderController@decline_orders');
 Route::get('/view_order_details', 'OrderController@view_order_details');
 Route::get('/print_order', 'OrderController@print_order');
+
+
+//bkash
+Route::get('bkash-payment', 'BkashController@bkash');
+
+
+//github login
+Route::get('auth/github', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/github/callback', 'Auth\LoginController@handleProviderCallback');

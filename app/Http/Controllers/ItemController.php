@@ -17,13 +17,15 @@ class ItemController extends Controller
                 ->join('categories', 'categories.id', '=', 'items.category_id')
                 ->select('items.*', 'categories.name as category_name')
                 ->get();
-       return view('back_end.item', compact('items'));
+        $total_items = Item::all();
+       return view('back_end.item', compact('items', 'total_items'));
    }
 
    public function add_item()
    {
        $categories =  Category::all();
-       return view('back_end.add_item', compact('categories'));
+       $total_items = Item::all();
+       return view('back_end.add_item', compact('categories', 'total_items'));
    }
 
 public function save_item(Request $request)
@@ -53,7 +55,8 @@ public function save_item(Request $request)
    {
        $categories = Category::all();
        $item =Item::find($id);
-       return view('back_end.edit_item', compact('item', 'categories'));
+       $total_items = Item::all();
+       return view('back_end.edit_item', compact('item', 'categories', 'total_items'));
    }
 
     public function update_item(Request $request)

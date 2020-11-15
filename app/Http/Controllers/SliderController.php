@@ -6,6 +6,7 @@ use App\Slider;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Category;
+use App\Item;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class SliderController extends Controller
     {
         // $categories =  Category::all();
         $sliders = Slider::all();
-        return view('back_end.slider', compact('sliders'));
+        $total_items= Item::all();
+        return view('back_end.slider', compact('sliders', 'total_items'));
 
     }
     public function save_slider(Request $request)
@@ -43,7 +45,8 @@ class SliderController extends Controller
     public function edit_slider($id)
     {
           $item = Slider::find($id);
-          return view('back_end.edit_slider', compact('item'));
+          $total_items= Item::all();
+          return view('back_end.edit_slider', compact('item', 'total_items'));
     }
 
     public function update_slider(Request $request)
