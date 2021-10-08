@@ -14,20 +14,17 @@ class CategoryController extends Controller
         $sliders = Slider::all();
         $categories =  Category::all();
         $total_items = Item::all();
-        return view('back_end.category', compact('categories', 'sliders','items', 'total_items'));
+        return view('back_end.category', compact('categories', 'sliders', 'total_items'));
     }
 
 
     public function add_category(Request $request)
     {
-        Category::insert([
+        Category::create([
             "name" => $request->category_name,
             'created_at'=> Carbon::now()
         ]);
-        $sliders = Slider::all();
-        $categories =  Category::all();
-        $total_items = Item::all();
-       return view('back_end.category', compact('categories', 'sliders', 'items', 'total_items'));
+        return redirect('/category');
     }
 
     public function edit_category($id)
@@ -36,7 +33,7 @@ class CategoryController extends Controller
         $categories =  Category::all();
         $item = Category::where('id', $id)->first();
         $total_items = Item::all();
-        return view('back_end.edit_category', compact('item', 'categories', 'sliders', 'items', 'total_items'));
+        return view('back_end.edit_category', compact('item', 'categories', 'sliders', 'total_items'));
     }
 
     public function update_category(Request $request)
@@ -53,9 +50,9 @@ class CategoryController extends Controller
 
     public function delete_category($id)
     {
-        Category::where('id', $id)->delete();
+        $category = Category::find($id);
+        $category->delete();
         Toastr::error('category delted', 'success', ["positionClass" => "toast-top-right"]);
-
-         return back();
+        return back();
     }
 }

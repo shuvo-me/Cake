@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 Route::get('/dasboard', 'HomeController@dashboard');
+
 //frontend
 Route::get('/', 'FrontendController@home');
 
@@ -71,13 +72,11 @@ Route::get('/checkout', 'CheckoutController@index');
 Route::post('/place_the_order', 'CheckoutController@place_the_order');
 
 //stripe
-
 Route::get('stripe', 'StripePaymentController@stripe');
 Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
 
 
 //order
-
 Route::get('/pending_order', 'OrderController@index');
 Route::get('/confirm_order/{id}', 'OrderController@confirm_order');
 Route::get('/decline_order/{id}', 'OrderController@decline_order');
