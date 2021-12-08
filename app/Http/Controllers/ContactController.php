@@ -26,4 +26,13 @@ class ContactController extends Controller
         Toastr::success('Your information saved', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
+
+    function viewAllContacts(){
+        $contacts = Contact::latest()->get();
+        return view('back_end.contact',compact('contacts'));
+    }
+
+    function contactDetails(Contact $contact){
+      return view('back_end.contactDetails',compact('contact'));
+    }
 }

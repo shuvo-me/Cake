@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Auth;
 // });
 
 Auth::routes();
-
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@dashboard');
     Route::get('/dashoard', 'HomeController@dashboard');
@@ -26,9 +25,45 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/update_profile', 'UserController@update_profile');
     //gettig users
     Route::get('/all_admins', 'UserController@all_admins');
+
+    //category
+    Route::get('/category', 'CategoryController@category');
+    Route::post('/add_category', 'CategoryController@add_category');
+    Route::get('/edit_category/{id}', 'CategoryController@edit_category');
+    Route::post('/update_category', 'CategoryController@update_category');
+    Route::get('/delete_category/{id}', 'CategoryController@delete_category');
+
+    //slider
+    Route::get('/slider', 'SliderController@slider');
+    Route::post('/save_slider', 'SliderController@save_slider');
+    Route::get('/edit_slider/{id}', 'SliderController@edit_slider');
+    Route::post('/update_slider', 'SliderController@update_slider');
+    Route::get('/delete_slider/{id}', 'SliderController@delete_slider');
+
+    //item
+    Route::get('/item', 'ItemController@item')->name('item.index');
+    Route::get('/add_item', 'ItemController@add_item');
+    Route::post('/save_item', 'ItemController@save_item');
+    Route::get('/edit_item/{id}', 'ItemController@edit_item');
+    Route::post('/update_item', 'ItemController@update_item');
+    Route::get('/delete_item/{id}', 'ItemController@delete_item');
+
+
+    //order
+    Route::get('/pending_order', 'OrderController@index');
+    Route::get('/confirm_order/{id}', 'OrderController@confirm_order');
+    Route::get('/decline_order/{id}', 'OrderController@decline_order');
+    Route::get('/complete_orders', 'OrderController@complete_orders');
+    Route::get('/decline_orders', 'OrderController@decline_orders');
+    Route::get('/view_order_details', 'OrderController@view_order_details');
+    Route::get('/print_order', 'OrderController@print_order');
+
+
+    //contact message
+    Route::get('conct_msg','ContactController@viewAllContacts')->name('contact.all');
+    Route::get('contact/details/{contact}','ContactController@contactDetails')->name('contact.details');
 });
 
-Route::get('/dasboard', 'HomeController@dashboard');
 
 //frontend
 Route::get('/', 'FrontendController@home');
@@ -39,28 +74,10 @@ Route::post('/send_contact', 'ContactController@save_contact');
 
 
 
-//category
-Route::get('/category', 'CategoryController@category');
-Route::post('/add_category', 'CategoryController@add_category');
-Route::get('/edit_category/{id}', 'CategoryController@edit_category');
-Route::post('/update_category', 'CategoryController@update_category');
-Route::get('/delete_category/{id}', 'CategoryController@delete_category');
-
-//slider
-Route::get('/slider', 'SliderController@slider');
-Route::post('/save_slider', 'SliderController@save_slider');
-Route::get('/edit_slider/{id}', 'SliderController@edit_slider');
-Route::post('/update_slider', 'SliderController@update_slider');
-Route::get('/delete_slider/{id}', 'SliderController@delete_slider');
 
 
-//item
-Route::get('/item', 'ItemController@item');
-Route::get('/add_item', 'ItemController@add_item');
-Route::post('/save_item', 'ItemController@save_item');
-Route::get('/edit_item/{id}', 'ItemController@edit_item');
-Route::post('/update_item', 'ItemController@update_item');
-Route::get('/delete_item/{id}', 'ItemController@delete_item');
+
+
 
 
 //cart
@@ -75,15 +92,6 @@ Route::post('/place_the_order', 'CheckoutController@place_the_order');
 Route::get('stripe', 'StripePaymentController@stripe');
 Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
 
-
-//order
-Route::get('/pending_order', 'OrderController@index');
-Route::get('/confirm_order/{id}', 'OrderController@confirm_order');
-Route::get('/decline_order/{id}', 'OrderController@decline_order');
-Route::get('/complete_orders', 'OrderController@complete_orders');
-Route::get('/decline_orders', 'OrderController@decline_orders');
-Route::get('/view_order_details', 'OrderController@view_order_details');
-Route::get('/print_order', 'OrderController@print_order');
 
 
 //bkash
