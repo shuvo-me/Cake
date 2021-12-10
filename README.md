@@ -1,4 +1,4 @@
 ## CAke
 ### Online cake store
 
-[Live Project](cake.shuvo2748.com)
+[Live Project](http://cake.shuvo2748.com/)
